@@ -28,6 +28,9 @@ function NavbarComponent() {
             <Nav.Item>
               <Nav.Link href="/login" onClick={handleShowModal}>Mi cuenta</Nav.Link>
             </Nav.Item>
+            <Nav.Item>
+              <Nav.Link href="/currentsemester">Mi semestre</Nav.Link>
+            </Nav.Item>
           </Nav>
         </Container>
       </Navbar>

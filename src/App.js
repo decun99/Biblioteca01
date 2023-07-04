@@ -6,6 +6,7 @@ import NavbarComponent from './components/Navbar';
 import Home from './components/Home';
 import Asignatura from './components/Asignatura';
 import AsignaturaDetalle from './components/AsignaturaDetalle';
+import MiSemestre from './components/MiSemestre';
 
 
 
@@ -16,6 +17,7 @@ const App = () => {
       <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/asignaturas" element={<Asignatura />} />
+      <Route path="/currentsemester" element={<MiSemestre />} />
       <Route path="/asignaturas/:nombreAsignatura" element={<AsignaturaDetalle />} />
       </Routes>
     </BrowserRouter>
