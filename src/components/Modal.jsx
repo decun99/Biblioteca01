@@ -1,11 +1,37 @@
 import React, { useState } from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 
+function setCookie(cname, cvalue, exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+  var expires = "expires=" + d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+const users = require("./../data/users.json");
+
 function ModalForm({ show, handleClose }) {
+  const [error, setError] = useState('');
+
   const handleLogin = (event) => {
     event.preventDefault();
-    // Manejar la lógica de inicio de sesión aquí
-    console.log('Inicio de sesión enviado');
+
+    const email = event.target.elements.formBasicEmail.value;
+    const password = event.target.elements.formBasicPassword.value;
+
+    const user = users.find((user) => user.username === email && user.clave === password);
+
+    if (user) {
+      setError('');
+      console.log('Inicio de sesión exitoso');
+      // Establecer la cookie después de un inicio de sesión exitoso
+      setCookie('isLoggedIn', 'true', 1);
+      // Realizar acciones adicionales para el inicio de sesión exitoso
+    } else {
+      setError('Credenciales incorrectas');
+      console.log('Credenciales incorrectas');
+      // Mostrar un mensaje de error o realizar acciones adicionales para el inicio de sesión fallido
+    }
   };
 
   return (
@@ -28,6 +54,8 @@ function ModalForm({ show, handleClose }) {
             Submit
           </Button>
         </Form>
+
+        {error && <p>{error}</p>}
       </Modal.Body>
     </Modal>
   );
