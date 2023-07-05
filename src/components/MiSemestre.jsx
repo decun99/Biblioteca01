@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import { Button, Card, Col, Form, Row, Container, Dropdown, DropdownButton } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+let jason = require("./../data/ramos.json");
+
 const MiSemestre = () => {
   const [currentSemesterSubjects, setCurrentSemesterSubjects] = useState([]);
   const [semester, setSemester] = useState("current");
-  const [subject, setSubject] = useState("");
   const [image, setImage] = useState("");
-  const [selectedSubject, setSelectedSubject] = useState("");
+  const [subject, setSelectedSubject] = useState("");
 
 
   const addCurrentSemesterSubject = (subject, image) => {
@@ -25,7 +26,7 @@ const MiSemestre = () => {
       } else {
         alert("Invalid semester.");
       }
-      setSubject("");
+      setSelectedSubject("");
       setImage("");
     }
   };
@@ -49,11 +50,18 @@ const MiSemestre = () => {
           ))}
         </Row>
       </Container>
-      <Form> 
+      <Form>
         <Form.Group>
           <Form.Label>Subject</Form.Label>
-          <Form.Control type="text" value={subject} onChange={(e) => setSubject(e.target.value)} />
+          <DropdownButton id="subject-dropdown" title={subject || "Select Subject"}>
+            {jason.map(({ sigla }) => (
+              <Dropdown.Item key={sigla} onClick={() => setSelectedSubject(sigla)}>
+                {sigla}
+              </Dropdown.Item>
+            ))}
+          </DropdownButton>
         </Form.Group>
+
         <Form.Group>
           <Form.Label>Image URL</Form.Label>
           <Form.Control type="text" value={image} onChange={(e) => setImage(e.target.value)} />

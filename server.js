@@ -6,12 +6,14 @@ app.use(cors());
 
 // Resto de la configuración del servidor
 
+let ruta = "./src/data/ramos.json";
+
 app.use(express.json());
 
 // Ruta para obtener el JSON
 app.get('/json', (req, res) => {
   // Aquí puedes leer el JSON desde el archivo y enviarlo como respuesta
-  const jsonData = require("./src/components/ramos.json");
+  const jsonData = require(ruta);
   res.json(jsonData);
 });
 
@@ -22,7 +24,6 @@ const { json } = require('react-router-dom');
 // Ruta para editar el JSON
 app.post('/json', (req, res) => {
   const updatedData = req.body; // Datos enviados en el cuerpo de la solicitud
-  const ruta = './src/components/ramos.json'
   const jsonData = require(ruta); // Lee el JSON desde el archivo
 
   //console.log("jsonData:", jsonData);

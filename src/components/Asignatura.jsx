@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Card, Col, Form, Row, Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-let jason = require("./ramos.json")
+let jason = require("./../data/ramos.json");
 
 const Asignatura = () => {
   const [currentSemesterSubjects, setCurrentSemesterSubjects] = useState([]);
