@@ -10,59 +10,71 @@ const Asignatura = () => {
   const [semester, setSemester] = useState("current");
   const [subject, setSubject] = useState("");
   const [image, setImage] = useState("");
-  const [sigla, setSigla] = useState(""); // Agregado
+  const [sigla, setSigla] = useState("");
+  const [selectedSemester, setSelectedSemester] = useState(1); // Controla el semestre mostrado en la grilla
+  const [inputSemester, setInputSemester] = useState(1); // Controla el semestre al que se agregará la nueva materia
 
-  const addCurrentSemesterSubject = (subject, image, sigla) => {
-    setCurrentSemesterSubjects([...currentSemesterSubjects, { subject, image, sigla }]);
+  const addCurrentSemesterSubject = (subject, image, sigla, semestre) => {
+    setCurrentSemesterSubjects([...currentSemesterSubjects, { subject, image, sigla, semestre }]);
   };
 
   const removeCurrentSemesterSubject = (subject) => {
     setCurrentSemesterSubjects(currentSemesterSubjects.filter((s) => s.subject !== subject));
   };
 
-  const addPastSemesterSubject = (subject, image, sigla) => {
-    setPastSemesterSubjects([...pastSemesterSubjects, { subject, image, sigla }]);
+  const addPastSemesterSubject = (subject, image, sigla, semestre) => {
+    setPastSemesterSubjects([...pastSemesterSubjects, { subject, sigla, semestre }]);
   };
 
   const addSubject = () => {
-    if (subject && image && sigla) { // Verifica que todos los campos estén completos
-      const data = { subject, image, sigla }; // Crea un objeto con los datos a enviar
+    if (subject && image && sigla && inputSemester) { 
+      const data = { subject, image, sigla, "semestre": inputSemester }; 
 
-      fetch("http://localhost:3001/json", { // Realiza una solicitud POST al servidor
+      fetch("http://localhost:3001/json", { 
         method: "POST",
         headers: {
           "Content-Type": "application/json"
         },
         body: JSON.stringify(data)
       })
-        .then((response) => response.json())
-        .then((responseData) => {
-          if (responseData.success) {
-            if (semester === "current") {
-              addCurrentSemesterSubject(subject, image, sigla);
-            } else if (semester === "past") {
-              addPastSemesterSubject(subject, image, sigla);
-            }
-            setSubject("");
-            setImage("");
-            setSigla("");
-          } else {
-            console.error("Error al guardar los datos en el servidor");
+      .then((response) => response.json())
+      .then((responseData) => {
+        if (responseData.success) {
+          if (semester === "current") {
+            addCurrentSemesterSubject(subject, image, sigla, inputSemester);
+          } else if (semester === "past") {
+            addPastSemesterSubject(subject, image, sigla, inputSemester);
           }
-        })
-        .catch((error) => {
-          console.error("Error en la solicitud:", error);
-        });
+          setSubject("");
+          setImage("");
+          setSigla("");
+          setInputSemester(1);
+        } else {
+          console.error("Error al guardar los datos en el servidor");
+        }
+      })
+      .catch((error) => {
+        console.error("Error en la solicitud:", error);
+      });
     }
   };
 
   return (
     <div>
-      <h2>Todos Los Ramos</h2>
+      <h2>Ramos x semestre</h2>
       <Container>
+      <Form.Control as="select" value={selectedSemester} onChange={(e) => setSelectedSemester(e.target.value)}>
+            <option value={1}>1</option>
+            <option value={2}>2</option>
+            <option value={3}>3</option>
+            <option value={4}>4</option>
+            <option value={5}>5</option>
+            <option value={6}>6</option>
+            <option value={7}>7</option>
+            <option value={8}>8</option>
+          </Form.Control>
         <Row>
-          {/* Renderiza la lista de asignaturas */}
-          {jason.map(({ subject, image, sigla }) => (
+          {jason.filter(({ semestre }) => semestre === selectedSemester).map(({ subject, image, sigla }) => (
             <Col md={4} key={subject}>
               <Link to={`/asignaturas/${subject}`}>
                 <Card onClick={() => removeCurrentSemesterSubject(subject)}>
@@ -86,10 +98,15 @@ const Asignatura = () => {
           <Form.Label>Image URL</Form.Label>
           <Form.Control type="text" value={image} onChange={(e) => setImage(e.target.value)} />
         </Form.Group>
-        <Form.Group> {/* Agregado */}
+        <Form.Group>
           <Form.Label>Sigla</Form.Label>
           <Form.Control type="text" value={sigla} onChange={(e) => setSigla(e.target.value)} />
         </Form.Group>
+        <Form.Group>
+          <Form.Label>Semestre</Form.Label>
+          <Form.Control type="text" value={inputSemester} onChange={(e) => setInputSemester(e.target.value)} /> {/* Modificado: Utilizar `inputSemester` en lugar de `selectedSemester` */}
+        </Form.Group>
+
         <Button onClick={addSubject}>Add Subject</Button>
       </Form>
     </div>
