@@ -59,7 +59,7 @@ const MiSemestre = () => {
           {/* Renderiza la lista de asignaturas */}
           {misem.map(({ subject, image, sigla }) => (
             <Col md={4} key={subject}>
-              <Link to={`/asignaturas/${subject}`}>
+              <Link to={`/asignaturas/${sigla}`}>
                 <Card onClick={() => removeCurrentSemesterSubject(subject)}>
                   <Card.Img variant="top" src={image} alt={subject} style={{ width: "350px", height: "150px" }} />
                   <Card.Body>
