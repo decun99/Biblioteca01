@@ -8,7 +8,7 @@ import Asignatura from './components/Asignatura';
 import AsignaturaDetalle from './components/AsignaturaDetalle';
 import MiSemestre from './components/MiSemestre';
 import UserContext from './components/UserContext';
-
+//importamos todas las referencias que necesitamos para levantar adecuadamente la aplicación
 const App = () => {
   const [username, setUsername] = useState(''); // Definir el estado de usuario
 

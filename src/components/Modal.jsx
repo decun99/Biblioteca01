@@ -4,7 +4,7 @@ import UserContext from './UserContext'; // Importar UserContext
 import users from '../data/users.json';
 var userglobal = '';
 
-function setCookie(cname, cvalue, exdays) {
+function setCookie(cname, cvalue, exdays) {//Generación de una coockie con la información de sesión del usuario (forma preliminar de emplear el sistema de autenticación del usuaio, eventualmente reemplazable)
   var d = new Date();
   d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
   var expires = "expires=" + d.toUTCString();
@@ -21,7 +21,7 @@ function ModalForm({ show, handleClose}) {
   const handleLogin = (event) => {
     event.preventDefault();
 
-    const email = event.target.elements.formBasicEmail.value;
+    const email = event.target.elements.formBasicEmail.value;//comprobamos las credenciales ingresadas por el usuario
     const password = event.target.elements.formBasicPassword.value;
 
     const user = users.find((user) => user.username === email && user.clave === password);
@@ -42,7 +42,7 @@ function ModalForm({ show, handleClose}) {
     }
   };
 
-  return (
+  return (//Nuevamente, generamos la ventana interactiva, en este caso para el inicio de sesión el usuario (particularmente, en este contexto fue más tentador emplear una ventana emergente, para no entorpecer mucho la interacción con la página)
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
         <Modal.Title>Login</Modal.Title>

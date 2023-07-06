@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import YouTube from "react-youtube";
-import rdata from "../data/ramos.json";
+import rdata from "../data/ramos.json";//importamos las librerías con las cuales leer los datos, además de implementar Youtube, y obtener la vista de los videos al ser desplegados en la aplicación
 
 const AsignaturaDetalle = ({ asignatura }) => {
   const [videoId, setVideoId] = useState("");
@@ -9,18 +9,13 @@ const AsignaturaDetalle = ({ asignatura }) => {
   const [desiredGrade, setDesiredGrade] = useState("");
   const [requiredScore, setRequiredScore] = useState("");
 
-  const handleVideoSubmit = (e) => {
+  const handleVideoSubmit = (e) => {//Gestor de video subido a la plataforma (no lo logramos implementar)
     e.preventDefault();
-    // Aquí puedes realizar alguna lógica para guardar el video con el ID "videoId"
-    // en la sección correspondiente de la asignatura
     console.log("Video submitted:", videoId);
     setVideoId("");
   };
 
   const savePdfToAsignatura = async (file) => {
-    // Aquí puedes implementar la lógica para guardar el archivo PDF en la asignatura
-    // Utiliza las funcionalidades necesarias, como enviar una solicitud HTTP al servidor o utilizar una API de almacenamiento
-    // Retorna una promesa que se resuelve cuando el archivo se guarda correctamente
     return new Promise((resolve, reject) => {
       // Simulación de la lógica de guardado exitoso después de 2 segundos
       setTimeout(() => {
@@ -53,9 +48,10 @@ const AsignaturaDetalle = ({ asignatura }) => {
     setDesiredGrade("");
   };
 
+
+  //Forma con la cual podemos desplegar el contenido asociado a cad ramo, dependiendo de la sigla con la cual este es identificado, y así entregar en la aplicación los videos correspondientes a la asignatura
   // Obtener la ruta actual de la página web
   const currentPath = window.location.pathname;
-
 // Extraer el campo deseado de la ruta actual (por ejemplo, la sigla)
   const desiredField = currentPath.split("/")[2];
   //console.log(desiredField);
@@ -71,10 +67,10 @@ const AsignaturaDetalle = ({ asignatura }) => {
       <h2>{asignatura}</h2>
 
       <h3>Videos</h3>
-      <Form>
+      <Form>{/*Desplegamos la vista de MiSemestre, donde se irán desplegando los videos asociados al ramo en cuestión, así como las opciones de ingreso de videos para aumentar el tamaño del repositorio*/}
         <Form.Label>Videos de la Asignatura</Form.Label>
         {listaVideos.map((item) => (
-            <div key = {item}>
+            <div key = {item}>{/*Función Youtube, donde, por medio del ID de un video en la plataforma, podemos muestrear dicho contenido en la ventana de la aplicación*/}
             <YouTube videoId={item} />  
           </div>
         ))}
