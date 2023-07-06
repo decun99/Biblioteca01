@@ -1,10 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react'; // Importar useContext
 import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import ModalForm from './Modal';
+import UserContext from './UserContext'; // Importar UserContext
+
+
 
 function NavbarComponent() {
+
+  
+  
+  const { username } = useContext(UserContext); // Acceder al nombre del usuario a través del contexto
   const [showModal, setShowModal] = useState(false);
 
   const handleShowModal = (e) => {
@@ -12,9 +19,13 @@ function NavbarComponent() {
     setShowModal(true);
   };
 
+
+
   const handleCloseModal = () => {
     setShowModal(false);
   };
+
+  
 
   return (
     <>
@@ -32,10 +43,12 @@ function NavbarComponent() {
               <Nav.Link href="/currentsemester">Mi semestre</Nav.Link>
             </Nav.Item>
           </Nav>
+          {username && <Navbar.Text>Bienvenido, {username}!</Navbar.Text>} {/* Mensaje de bienvenida */}
+          
         </Container>
       </Navbar>
 
-      <ModalForm show={showModal} handleClose={handleCloseModal} />
+      <ModalForm show={showModal} handleClose={handleCloseModal}  />
     </>
   );
 }

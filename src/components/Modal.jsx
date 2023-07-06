@@ -1,5 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react'; // Importar useContext
 import { Button, Modal, Form } from 'react-bootstrap';
+import UserContext from './UserContext'; // Importar UserContext
+import users from '../data/users.json';
+var userglobal = '';
 
 function setCookie(cname, cvalue, exdays) {
   var d = new Date();
@@ -8,9 +11,11 @@ function setCookie(cname, cvalue, exdays) {
   document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
-const users = require("./../data/users.json");
+///const users = require("./../data/users.json");
 
-function ModalForm({ show, handleClose }) {
+
+function ModalForm({ show, handleClose}) {
+  const { setUsername } = useContext(UserContext); // Acceder a setUsername a través del contexto
   const [error, setError] = useState('');
 
   const handleLogin = (event) => {
@@ -25,8 +30,11 @@ function ModalForm({ show, handleClose }) {
       setError('');
       console.log('Inicio de sesión exitoso');
       // Establecer la cookie después de un inicio de sesión exitoso
+      userglobal = user;
       setCookie('isLoggedIn', 'true', 1);
-      // Realizar acciones adicionales para el inicio de sesión exitoso
+      // Actualizar el nombre de usuario en el contexto
+      setUsername(email);
+      handleClose(); // Cierra el modal después del inicio de sesión exitoso
     } else {
       setError('Credenciales incorrectas');
       console.log('Credenciales incorrectas');
