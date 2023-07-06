@@ -1,0 +1,24 @@
+[
+    {
+        "sigla": "TEL-315",
+        "subject": "Redes inalámbricas",
+        "archivo_video_id":"5OYjttKmZQU",
+        "archivo_pdf": ""
+    },
+    {
+        "sigla": "TEL-343",
+        "subject": "Planificación y dimensionamiento de redes de computadores",
+        "archivo_video_id": "UysYDU8M2b0",
+        "archivo_pdf": ""
+    },
+    {
+        "sigla": "ELO-241",
+        "subject": "Laboratorio de comunicaciones",
+        "archivo_video_id": "eBB3R0vJo08",
+        "archivo_pdf": ""
+    },
+    {
+        "sigla": "MAT-021",
+        "archivo_video_id": ""
+    }
+]

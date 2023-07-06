@@ -54,16 +54,18 @@ const MiSemestre = () => {
         <Form.Group>
           <Form.Label>Subject</Form.Label>
           <DropdownButton id="subject-dropdown" title={subject || "Select Subject"}>
-            {jason.map(({ sigla }) => (
+            {jason.map(({ sigla, subject }) => (
               <Dropdown.Item key={sigla} onClick={() => setSelectedSubject(sigla)}>
                 {sigla}
+                {":"}
+                {subject}
               </Dropdown.Item>
             ))}
           </DropdownButton>
         </Form.Group>
 
         <Form.Group>
-          <Form.Label>Image URL</Form.Label>
+          <Form.Label>Customiza tu semestre como quieras! Agrega los links de imagenes que te gusten a tus ramos y ten un repositorio a tu estilo: </Form.Label>
           <Form.Control type="text" value={image} onChange={(e) => setImage(e.target.value)} />
         </Form.Group>
         <Button onClick={addSubject}>Add Subject</Button>

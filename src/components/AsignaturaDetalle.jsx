@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import YouTube from "react-youtube";
+import rdata from "../data/ramos.json";
 
 const AsignaturaDetalle = ({ asignatura }) => {
   const [videoId, setVideoId] = useState("");
@@ -52,11 +53,32 @@ const AsignaturaDetalle = ({ asignatura }) => {
     setDesiredGrade("");
   };
 
+  // Obtener la ruta actual de la página web
+  const currentPath = window.location.pathname;
+
+// Extraer el campo deseado de la ruta actual (por ejemplo, la sigla)
+  const desiredField = currentPath.split("/")[2];
+  //console.log(desiredField);
+  // Realizar la comparación con los campos del archivo JSON
+  const asignaturaData = rdata.find((item) => item.sigla === desiredField);
+  //const asignaturaData_vid = asignaturaData.archivo_video_id;
+  const { archivo_video_id: listaVideos } = asignaturaData;
+
+  
+
   return (
     <div>
       <h2>{asignatura}</h2>
 
       <h3>Videos</h3>
+      <Form>
+        <Form.Label>Videos de la Asignatura</Form.Label>
+        {listaVideos.map((item) => (
+            <div key = {item}>
+            <YouTube videoId={item} />  
+          </div>
+        ))}
+      </Form>
       <Form onSubmit={handleVideoSubmit}>
         <Form.Group>
           <Form.Label>Video ID</Form.Label>
